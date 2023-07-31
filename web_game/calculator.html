@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculator</title>
+
+<style>
+*{box-sizing: border-box}
+#result { width: 180px; height: 50px; margin: 5px; text-align: right;}
+#operator{width: 50px; height: 50px; margin:5px; text-align: center;}
+button{width:50px; height:50px; margin:5px}
+</style>
+</head>
+
+<!-- 계산기 구현(버튼) -->
+<body>
+    <input readonly id="operator">
+    <input redaonly type="number" id="result">
+    <div class="row">
+        <button id="num-7">7</button>
+        <button id="num-8">8</button>
+        <button id="num-9">9</button>
+        <button id="plus">+</button>
+    </div>
+    <div class="row">
+        <button id="num-4">4</button>
+        <button id="num-5">5</button>
+        <button id="num-6">6</button>
+        <button id="minus">-</button>
+    </div>
+    <div class="row">
+        <button id="num-1">1</button>
+        <button id="num-2">2</button>
+        <button id="num-3">3</button>
+        <button id="divide">/</button>
+    </div>
+    <div class="row">
+        <button id="clear">C</button>
+        <button id="num-0">0</button>
+        <button id="calculate">=</button>
+        <button id="multiply">X</button>
+    </div>
+    <script>
+        let numOne='';
+        let operator='';
+        let numTwo='';
+        const $operator = document.querySelector('#operator');
+        const $result = document.querySelector('#result');
+
+        const onClickNumber = (event) => {
+            if(!operator){
+                numOne += event.target.textContent;
+                $result.value += event.target.textContent;
+                return;
+            }
+            // 이 아래는 operator가 있는 경우에만 실행됨
+            if(!numTwo){
+                $result.value='';
+            }
+            numTwo += event.target.textContent;
+            $result.value += event.target.textContent;
+        };
+        document.querySelector('#num-0').addEventListener('click', onClickNumber);
+        document.querySelector('#num-1').addEventListener('click', onClickNumber);
+        document.querySelector('#num-2').addEventListener('click', onClickNumber);
+        document.querySelector('#num-3').addEventListener('click', onClickNumber);
+        document.querySelector('#num-4').addEventListener('click', onClickNumber);
+        document.querySelector('#num-5').addEventListener('click', onClickNumber);
+        document.querySelector('#num-6').addEventListener('click', onClickNumber);
+        document.querySelector('#num-7').addEventListener('click', onClickNumber);
+        document.querySelector('#num-8').addEventListener('click', onClickNumber);
+        document.querySelector('#num-9').addEventListener('click', onClickNumber);
+
+        const onClickOperator = (op) => ()=>{
+            if(numOne){
+                operator = op;
+                $operator.value = op;
+            }else{
+                alert('숫자를 입력하시오');
+            }// if
+        }; // arrow func.
+        document.querySelector('#plus').addEventListener('click', onClickOperator('+'));
+        document.querySelector('#minus').addEventListener('click', onClickOperator('-'));
+        document.querySelector('#divide').addEventListener('click', onClickOperator('/'));
+        document.querySelector('#multiply').addEventListener('click', onClickOperator('*'));
+        document.querySelector('#calculate').addEventListener('click', ()=> {
+            if(numTwo){
+                switch(operator){
+                    case '+':
+                        $result.value = parseInt(numOne) + parseInt(numTwo);
+                        // plus만 문자열을 숫자형으로 변환해야 함
+                        break;
+                    case '-':
+                        $result.value = numOne - numTwo;
+                        break;
+                    case '/':
+                        $result.value = numOne / numTwo;
+                        break;
+                    case '*':
+                        $result.value = numOne * numTwo;
+                        // minus, divide, multiply 연산자들은 자동으로 숫자로 변환되어 계산됨
+                        // parseInt로 변환할 필요 없음
+                        break;
+                        default:
+                        break;
+                }// switch
+            }else{
+                alert('숫자를 먼저 입력하시오');
+            }//if
+        });
+        document.querySelector('#clear').addEventListener('click', ()=> {
+        numOne='';
+        operator='';
+        numTwo='';
+        $operator.value='';
+        $result.value='';
+        });
+    </script>
+</body>
+
+</html>

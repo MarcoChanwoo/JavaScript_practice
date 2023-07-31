@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>끝말잇기</title>
+</head>
+
+<body>
+  <div><span id="order">1</span>번째 참가자</div>
+  <div>제시어: <span id="word"></span></div>
+  <input type="text">
+  <button>입력</button>
+
+  <script>
+    // const number = prompt('참가 인원은?');
+    // const RealNumber = Number(number);
+    const number = Number(prompt('참가 인원은?')); 
+    // => 위의 두 줄을 더 간략하게, 입력 숫자는 문자열(String)이므로 숫자로 변형
+    // console.log(typeof number);
+    // alert(number);
+
+    // const $order = document.querySelector('#order');
+    // console.log($order); => <span id="order">1</span>
+    const $button = document.querySelector('button');
+    const $input = document.querySelector('input');
+    const $word = document.querySelector('#word');
+    const $order = document.querySelector('#order');
+    let word; // 제시어, 입력할 단어가 정해지는 것이 아니므로 let 이용
+    let newWord; // 현재 입력된 단어
+
+    const onClickButton = () => {      
+      // if(!word){
+      //   // 제시어가 비어있는 경우 실행
+      //   word = newWord; //입력한 단어가 제시어가 됨
+      //   $word.textContent = word; // 화면에 제시어 표시
+      //   const order = Number($order.textContent);
+      //   if(order +1 > number){
+      //     $order.textContent = 1;
+      //   }else{
+      //     $order.textContent = order + 1;
+      //   }
+      //   $input.value='';
+      //   $input.focus();
+      // }else{
+      //   // 제시어가 비지 않은 경우 실행
+      //   if(word[word.length -1] === newWord[0]){  // 입력한 단어가 올바른가?
+      //     // 올바를 경우
+      //     word = newWord; // 현 단어를 제시어에 저장함
+      //     $word.textContent = word; // 화면에 제시어를 표시
+      //     const order = Number($order.textContent);
+      //     if(order+1>number){
+      //       $order.textContent=1;
+      //     }else{
+      //       $order.textContent = order+1;
+      //     }
+      //     $input.value='';
+      //     $input.focus();
+      //   }else{
+      //   // 올바르지 않은 경우
+      //   alert('잘못된 단어!');
+      //   $input.value="";
+      //   $input.focus();
+      //   };
+      // };
+
+      // 더 간결한 표현↓
+        if(!word || word[word.length-1]===newWord[0]){  
+          // 제시어가 비어있거나 입력한 값이 올바른지 판단
+          word = newWord; // 입력한 단어가 제시어가 됨
+          $word.textContent = word; // 화면에 제시어 표시
+          const order = Number($order.textContent);
+          if(order+1>number){
+            $order.textContent=1;
+          }else{
+            $order.textContent=order+1;
+          }
+        }else{ // 올바르지 않다면
+          alert('잘못된 단어');
+        }
+        $input.value='';
+        $input.focus();
+    };
+
+    const onInput = (event) => {      
+      newWord = event.target.value; // 입력하는 단어를 현재 단어로
+    };
+
+    $button.addEventListener('click',onClickButton);
+    $input.addEventListener('input',onInput);
+
+
+  </script>
+
+</body>
+</html>
